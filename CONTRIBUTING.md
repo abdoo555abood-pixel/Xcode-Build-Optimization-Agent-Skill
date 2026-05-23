@@ -1,108 +1,209 @@
-# Contributing to Xcode Build Optimization Agent Skills
+# Contributing to Swift Concurrency Agent Skill
 
-Thanks for helping improve this repository. Contributions are welcome when they keep the repo focused on Xcode build analysis, deterministic benchmarking, and recommend-first optimization guidance.
+Thank you for your interest in contributing! This repository contains an **Agent Skill** following the [Agent Skills open format](https://agentskills.io/home), which means it has specific structural requirements beyond typical documentation.
 
-## About This Repository
+## 🤖 What Are Agent Skills?
 
-This is a multi-skill repository that follows the Agent Skills open format:
+Agent Skills are modular capabilities that extend AI agents' functionality. They package instructions, metadata, and resources in a specific format that agents can discover and use automatically. This isn't just documentation—it's a structured skill that AI coding assistants load on-demand.
 
-- Skills live under `skills/`, each with a `SKILL.md` entrypoint. Each skill bundles its own scripts, references, and schemas so it works after standalone installation.
-- Canonical copies of shared files live in `references/`, `schemas/`, and `scripts/` at the repo root. When a root-level file changes, update the copies inside every skill that bundles it (see "Keeping shared files in sync" below).
-- The skills are intentionally recommend-first. They should not make project or source changes without explicit developer approval.
+**Learn more:**
+- [Agent Skills Overview](https://agentskills.io/home) - Understanding the format
+- [Anthropic's Agent Skills Documentation](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) - Official specification and best practices
 
-## Recommended Workflow
+## 🎯 Why This Matters
 
-### Use skill-authoring assistance
+Contributors who aren't familiar with the Agent Skills format may inadvertently:
+- Break the YAML frontmatter structure
+- Use incorrect markdown formatting that agents can't parse
+- Add content that doesn't follow agent-friendly patterns
+- Miss important metadata requirements
 
-If you have access to a skill-authoring assistant such as `skill-creator`, use it when updating any `SKILL.md` or reference file. That helps preserve:
+**That's why we strongly recommend using AI assistance for contributions.**
 
-- valid YAML frontmatter
-- concise, trigger-oriented descriptions
-- progressive disclosure into reference files
-- consistent terminology across the six skills
+## ✨ Recommended Contribution Workflow
 
-### Keep the repo on mission
+### Option 1: Use the skill-creator skill (Highly Recommended)
 
-Contributions should stay within Xcode build optimization topics:
+The best way to contribute is to use Claude with the [skill-creator skill](https://github.com/anthropics/skills/tree/main/skills/skill-creator). This ensures your contribution follows the Agent Skills format correctly.
 
-- benchmark design and interpretation
-- compile hotspot analysis
-- project and scheme build settings
-- build script behavior
-- Swift Package Manager build overhead
-- explicit module dependency and module variant analysis
+**How to use it:**
 
-Avoid broad iOS architecture guidance, CI platform evangelism, or product documentation unrelated to build optimization.
+1. **Install the skill-creator skill** in your Claude-compatible tool (Claude.ai, Cursor, etc.)
+   ```bash
+   # If using skills.sh
+   npx skills add https://github.com/anthropics/skills --skill skill-creator
+   ```
 
-## Quality Standards
+2. **Ask Claude to help with your contribution:**
+   ```
+   Use the skill-creator skill to help me update the Swift Concurrency Agent Skill.
+   I want to [describe your contribution].
+   ```
 
-### Skill quality
+3. **Review the generated changes** to ensure technical accuracy for Swift Concurrency
 
-- Every `SKILL.md` must include valid `name` and `description` frontmatter.
-- Descriptions must clearly state what the skill does and when to use it.
-- Keep `SKILL.md` concise; push deep details into nearby reference files.
-- Preserve recommend-first behavior, especially in `xcode-build-orchestrator`.
+4. **Submit your PR** with the AI-generated improvements
 
-### Technical quality
+**Benefits:**
+- ✅ Proper YAML frontmatter structure
+- ✅ Agent-friendly markdown formatting
+- ✅ Correct file organization
+- ✅ Follows best practices from Anthropic's guidelines
 
-- Prefer deterministic instructions over vague advice.
-- Cite Apple guidance, the SwiftLee article, or RocketSim docs when changing shared source summaries.
-- Keep benchmark and recommendation formats consistent with `schemas/build-benchmark.schema.json` and `references/recommendation-format.md`.
-- Avoid destructive automation. Scripts should gather evidence or format reports, not rewrite user projects.
+### Option 2: Use Claude Without the skill-creator skill
 
-### Scripts and automation
+If you don't have access to the skill-creator skill, you can still use Claude (or other AI assistants) to help:
 
-- Keep helper scripts dependency-light and portable.
-- Use standard library tooling when possible.
-- Avoid network calls in scripts and GitHub Actions unless they are clearly required.
-- If you add or rename reference files, update the README structure block or let the sync workflow do it.
+1. **Share the Agent Skills documentation** with Claude:
+   - [Agent Skills Overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
+   - [Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
 
-### Keeping shared files in sync
+2. **Ask Claude to review your changes** for Agent Skills format compliance
 
-Each skill bundles copies of the scripts and references it needs. The root-level `scripts/`, `references/`, and `schemas/` directories hold the canonical versions. When you change a root-level file, copy the updated version into every skill folder that includes it:
+3. **Request that Claude verify:**
+   - YAML frontmatter is valid
+   - Markdown structure is agent-friendly
+   - Content follows progressive disclosure patterns
 
-| Root file | Bundled in skills |
-|-----------|-------------------|
-| `scripts/benchmark_builds.py` | xcode-build-benchmark, xcode-build-orchestrator, xcode-build-fixer |
-| `scripts/diagnose_compilation.py` | xcode-compilation-analyzer, xcode-build-orchestrator |
-| `scripts/generate_optimization_report.py` | xcode-build-orchestrator |
-| `scripts/check_spm_pins.py` | spm-build-analysis |
-| `references/benchmark-artifacts.md` | xcode-build-benchmark, xcode-build-orchestrator |
-| `references/build-settings-best-practices.md` | xcode-project-analyzer, xcode-build-orchestrator, xcode-build-fixer |
-| `references/recommendation-format.md` | xcode-compilation-analyzer, xcode-project-analyzer, spm-build-analysis, xcode-build-orchestrator, xcode-build-fixer |
-| `references/build-optimization-sources.md` | xcode-compilation-analyzer, xcode-project-analyzer, spm-build-analysis |
-| `schemas/build-benchmark.schema.json` | xcode-build-benchmark |
+### Option 3: Manual Contribution
 
-## Typical Contribution Types
+If you prefer to contribute manually, please carefully review:
 
-- Improve one of the six skill entrypoints.
-- Add a focused reference file for a missing Xcode build topic.
-- Improve the benchmark schema or helper scripts.
-- Clarify README installation or usage guidance.
-- Update the stored source summaries as Apple or RocketSim docs evolve.
-- Add your optimization results to the Community Results table in the README.
+1. **The Agent Skills specification**: https://agentskills.io/home
+2. **Anthropic's best practices**: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices
+3. **Existing file structure** in this repository
 
-## Pull Request Process
+**Key requirements:**
+- YAML frontmatter must be valid and complete
+- Use clear, actionable headings
+- Keep instructions concise and agent-friendly
+- Follow the existing reference file patterns
+- Test your changes with an AI agent if possible
 
-1. Create a focused branch.
-2. Keep related changes grouped together.
-3. Verify the changed markdown still reads well as an Agent Skill.
-4. If you touched scripts or workflows, run a quick sanity check locally.
-5. Open a PR with a short summary, rationale, and any validation notes.
+## 📝 Types of Contributions
 
-## Development Notes
+We welcome contributions in these areas:
 
-- The README structure block is maintained by `.github/scripts/sync-readme.js`.
-- Release automation bumps the shared plugin metadata version in `.claude-plugin/`.
-- `.agents/product-marketing-context.md` is an internal draft aid and is intentionally ignored by Git.
+### 1. Bug Fixes
+- Incorrect Swift Concurrency advice
+- Outdated code examples
+- Broken links or references
+- Typos or clarity improvements
 
-## Resources
+### 2. New Reference Content
+- Additional Swift Concurrency patterns
+- New error scenarios and solutions
+- Swift 6+ feature coverage
+- Real-world examples
 
-- Agent Skills format: <https://agentskills.io/home>
-- Claude Code Agent Skills docs: <https://code.claude.com/en/skills>
-- Apple Xcode build optimization docs: see `references/build-optimization-sources.md`
-- SwiftLee build performance article: <https://www.avanderlee.com/optimization/analysing-build-performance-xcode/>
+### 3. SKILL.md Improvements
+- Better decision trees
+- Clearer triage guidance
+- Updated agent behavior rules
 
-## Code of Conduct
+### 4. Documentation Updates
+- README improvements
+- Installation instructions
+- Usage examples
 
-Be respectful, specific, and evidence-driven. Favor measurable build improvements over subjective preferences.
+## 🎯 Quality Standards
+
+All contributions should meet these standards:
+
+### Swift Concurrency Accuracy
+- ✅ Follows Swift 6+ best practices
+- ✅ Includes working code examples
+- ✅ Cites official Swift documentation when relevant
+- ✅ Avoids deprecated patterns
+- ✅ Considers performance implications
+
+### Agent Skills Format Compliance
+- ✅ Valid YAML frontmatter (if modifying SKILL.md)
+- ✅ Agent-friendly markdown structure
+- ✅ Clear, actionable instructions
+- ✅ Proper file organization
+- ✅ Progressive disclosure (don't overload main SKILL.md)
+
+### Testing
+- ✅ Test code examples compile (Swift 6 mode preferred)
+- ✅ Verify advice with an AI agent if possible
+- ✅ Check that links work
+
+## 🚀 Pull Request Process
+
+1. **Fork the repository** and create a new branch
+   ```bash
+   git checkout -b feature/your-contribution
+   ```
+
+2. **Make your changes** (preferably using the skill-creator skill or Claude)
+
+3. **Test your changes:**
+   - Verify code examples compile
+   - Check markdown formatting
+   - Test with an AI agent if possible
+
+4. **Commit with a clear message:**
+   ```bash
+   git commit -m "Add guidance for Swift 6.2 isolated deinit"
+   ```
+
+5. **Submit a pull request** with:
+   - **Clear description** of what you changed and why
+   - **Rationale** for the change (link to Swift documentation, real-world scenario, etc.)
+   - **Mention if you used skill-creator or Claude** to ensure format compliance
+   - **Test results** if applicable
+
+6. **Respond to feedback** - We may request changes to ensure accuracy or format compliance
+
+## 🛠️ Development Setup
+
+To test your changes locally:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/avdlee/swift-concurrency-agent-skill.git
+   cd swift-concurrency-agent-skill
+   ```
+
+2. **Install the skill** in your AI tool (see README.md)
+
+3. **Test with your AI agent:**
+   ```
+   Use the swift-concurrency skill and [test your specific change]
+   ```
+
+## 📚 Resources
+
+### Agent Skills Documentation
+- [Agent Skills Home](https://agentskills.io/home) - Format overview
+- [Anthropic's Agent Skills Guide](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) - Official documentation
+- [Agent Skills Best Practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices) - Writing effective skills
+- [skill-creator skill](https://github.com/anthropics/skills/tree/main/skills/skill-creator) - AI-assisted skill authoring
+
+### Swift Concurrency Resources
+- [Swift Concurrency Course](https://www.swiftconcurrencycourse.com) - Comprehensive course by the author
+- [SwiftLee Blog](https://www.avanderlee.com/category/concurrency/) - Swift Concurrency articles
+- [Swift Evolution Proposals](https://github.com/apple/swift-evolution) - Official Swift language changes
+- [Apple's Swift Concurrency Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/concurrency/)
+
+## 🤝 Code of Conduct
+
+- Be respectful and constructive
+- Focus on technical accuracy
+- Welcome newcomers and help them learn
+- Assume good intentions
+
+## ❓ Questions?
+
+- **About Agent Skills format**: See [agentskills.io](https://agentskills.io/home) or [Anthropic's docs](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
+- **About Swift Concurrency**: Check the [references folder](swift-concurrency/references/) or [SwiftLee blog](https://www.avanderlee.com/category/concurrency/)
+- **About this skill**: Open an issue for discussion
+
+## 📄 License
+
+By contributing, you agree that your contributions will be licensed under the same MIT License that covers this project.
+
+---
+
+**Thank you for helping make Swift Concurrency more accessible to AI agents and developers!** 🎉
